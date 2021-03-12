@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Áp dụng DataTemplate cho DataGridColumn với điều kiện cho trước | Nguyễn Xuân Luân</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="Giả sử ta có 1 DataGrid  hiển thị dữ liệu về thông tin về điểm số của sinh viên và với mỗi điểm số khác nhau ta sẽ cần hiển thị cột đánh giá tương ứng.  Trong trường hợp này ta cần tạo ra nhiều templa ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.89986362.css" as="style"><link rel="preload" href="/assets/js/app.64739e7c.js" as="script"><link rel="preload" href="/assets/js/6.c2bdbd38.js" as="script"><link rel="preload" href="/assets/js/3.a1a593ad.js" as="script"><link rel="preload" href="/assets/js/13.388d5714.js" as="script"><link rel="prefetch" href="/assets/js/10.c2460142.js"><link rel="prefetch" href="/assets/js/11.f90fbf7e.js"><link rel="prefetch" href="/assets/js/12.7ec30be4.js"><link rel="prefetch" href="/assets/js/4.f59796d3.js"><link rel="prefetch" href="/assets/js/5.f2e2a2e3.js"><link rel="prefetch" href="/assets/js/7.b9b026ac.js"><link rel="prefetch" href="/assets/js/8.63a770c4.js"><link rel="prefetch" href="/assets/js/9.4da2c193.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.0cbd6f70.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.89986362.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/" class="nav-link home-link">Nguyễn Xuân Luân </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/" class="nav-link">Trang chủ</a></li><li class="nav-item"><a href="/tag/" class="nav-link">Tags</a></li><li class="nav-item"><a href="/cv/" class="nav-link">CV</a></li><li class="nav-item"><a href="/links/" class="nav-link">Liên kết</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/" class="nav-link mobile-home-link">Nguyễn Xuân Luân </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/" class="nav-link">Trang chủ</a></li><li class="mobile-nav-item"><a href="/tag/" class="nav-link">Tags</a></li><li class="mobile-nav-item"><a href="/cv/" class="nav-link">CV</a></li><li class="mobile-nav-item"><a href="/links/" class="nav-link">Liên kết</a></li> <li class="mobile-nav-item"><!----></li></ul></div></div></div> <div class="content-wrapper"><div id="vuepress-theme-blog__post-layout"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><header><h1 itemprop="name headline" class="post-title">
+        Áp dụng DataTemplate cho DataGridColumn với điều kiện cho trước
+      </h1> <div class="post-meta"><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="post-meta-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">Nguyễn Xuân Luân</span> <!----></div> <div class="post-meta-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2019-11-16T00:00:00.000Z">
+      Sat Nov 16 2019
+    </time></div> <ul itemprop="keywords" class="post-meta-tags"><li class="post-tag" data-v-42ccfcd5><a href="/tag/c#" data-v-42ccfcd5><span data-v-42ccfcd5>c#</span></a></li><li class="post-tag" data-v-42ccfcd5><a href="/tag/wpf" data-v-42ccfcd5><span data-v-42ccfcd5>wpf</span></a></li></ul></div></header> <div itemprop="articleBody" class="content__default"><p>Giả sử ta có 1 DataGrid  hiển thị dữ liệu về thông tin về điểm số của sinh viên và với mỗi điểm số khác nhau ta sẽ cần hiển thị cột đánh giá tương ứng.  Trong trường hợp này ta cần tạo ra nhiều template khác nhau cho phần đánh giá và hiển thị nó với điều kiện tương ứng.</p> <p>Dưới đây là class sinh viên mà tôi tạo ra để làm ví dụ:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Student</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token function">Student</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> code<span class="token punctuation">,</span><span class="token class-name"><span class="token keyword">string</span></span> name<span class="token punctuation">,</span><span class="token class-name"><span class="token keyword">double</span></span> totalScore<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+Code <span class="token operator">=</span> code<span class="token punctuation">;</span>Name <span class="token operator">=</span> name<span class="token punctuation">;</span>TotalScore <span class="token operator">=</span> totalScore<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> Code <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> Name <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">double</span></span> TotalScore <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>Đầu tiên ta tạo một class để xử lý việc chọn template hiển thị ra:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StudentTemplateSelector</span><span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">DataTemplateSelector</span></span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token return-type class-name">DataTemplate</span> BadTemplate
+
+<span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token return-type class-name">DataTemplate</span> MediumTemplate
+
+<span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token return-type class-name">DataTemplate</span> GoodTemplate
+
+<span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token return-type class-name">DataTemplate</span> ExcellentTemplate
+<span class="token punctuation">{</span>
+<span class="token keyword">get</span><span class="token punctuation">;</span><span class="token keyword">set</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name">DataTemplate</span> <span class="token function">SelectTemplate</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">object</span></span> item<span class="token punctuation">,</span> <span class="token class-name">DependencyObject</span> container<span class="token punctuation">)</span>
+
+<span class="token punctuation">{</span>
+
+<span class="token class-name">Student</span> student <span class="token operator">=</span> item <span class="token keyword">as</span> <span class="token class-name">Student</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>student <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">{</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>student<span class="token punctuation">.</span>TotalScore <span class="token operator">&gt;=</span> <span class="token number">9</span><span class="token punctuation">)</span>
+
+<span class="token keyword">return</span> ExcellentTemplate<span class="token punctuation">;</span>
+
+<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>student<span class="token punctuation">.</span>TotalScore <span class="token operator">&gt;=</span> <span class="token number">8</span><span class="token punctuation">)</span>
+
+<span class="token keyword">return</span> GoodTemplate<span class="token punctuation">;</span>
+<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>student<span class="token punctuation">.</span>TotalScore <span class="token operator">&gt;=</span> <span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token keyword">return</span> MediumTemplate<span class="token punctuation">;</span>
+<span class="token keyword">else</span> <span class="token keyword">return</span> BadTemplate<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">else</span>
+
+<span class="token keyword">return</span> <span class="token keyword">base</span><span class="token punctuation">.</span><span class="token function">SelectTemplate</span><span class="token punctuation">(</span>item<span class="token punctuation">,</span> container<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>Tiếp theo là tạo template tương ứng trên xaml</p> <div class="language-xml extra-class"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Window.Resources</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataTemplate</span> <span class="token attr-name"><span class="token namespace">x:</span>Key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”ExcellentTemplate”</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TextBlock</span> <span class="token attr-name">Margin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”2″</span> <span class="token attr-name">Text</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Excellent”</span> <span class="token attr-name">Foreground</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Red”/</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>DataTemplate</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataTemplate</span> <span class="token attr-name"><span class="token namespace">x:</span>Key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”GoodTemplate”</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TextBlock</span> <span class="token attr-name">Margin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”2″</span> <span class="token attr-name">Text</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Good”</span> <span class="token attr-name">Foreground</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Yellow”/</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>DataTemplate</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataTemplate</span> <span class="token attr-name"><span class="token namespace">x:</span>Key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”MediumTemplate”</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TextBlock</span> <span class="token attr-name">Margin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”2″</span> <span class="token attr-name">Text</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Medium”</span> <span class="token attr-name">Foreground</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Green”/</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>DataTemplate</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataTemplate</span> <span class="token attr-name"><span class="token namespace">x:</span>Key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”BadTemplate”</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TextBlock</span> <span class="token attr-name">Margin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”2″</span> <span class="token attr-name">Text</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Bad”</span> <span class="token attr-name">Foreground</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Gray”/</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>DataTemplate</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Window.Resources</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>Cuối cùng hiển thị nó lên DataGrid</p> <div class="language-xml extra-class"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataGrid</span> <span class="token attr-name">ItemsSource</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”{Binding}”</span>
+
+<span class="token attr-name">AutoGenerateColumns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”False”</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataGrid.Columns</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataGridTextColumn</span> <span class="token attr-name">Header</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Student</span> <span class="token attr-name">Code”</span> <span class="token attr-name">Binding</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”{Binding</span> <span class="token attr-name">Code}”</span><span class="token punctuation">/&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataGridTextColumn</span> <span class="token attr-name">Header</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Name”</span> <span class="token attr-name">Binding</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”{Binding</span> <span class="token attr-name">Name}”</span><span class="token punctuation">/&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataGridTextColumn</span> <span class="token attr-name">Header</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Total</span> <span class="token attr-name">Score”</span> <span class="token attr-name">Binding</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”{Binding</span> <span class="token attr-name">TotalScore}”</span><span class="token punctuation">/&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataGridTemplateColumn</span> <span class="token attr-name">Header</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”Grade”</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DataGridTemplateColumn.CellTemplateSelector</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">local:</span>StudentTemplateSelector</span>
+
+<span class="token attr-name">BadTemplate</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”{StaticResource</span> <span class="token attr-name">BadTemplate}”</span> <span class="token attr-name">MediumTemplate</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”{StaticResource</span> <span class="token attr-name">MediumTemplate}”</span> <span class="token attr-name">ExcellentTemplate</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”{StaticResource</span> <span class="token attr-name">ExcellentTemplate}”</span>
+
+<span class="token attr-name">GoodTemplate</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span>”{StaticResource</span> <span class="token attr-name">GoodTemplate}”</span><span class="token punctuation">/&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>DataGridTemplateColumn.CellTemplateSelector</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>DataGridTemplateColumn</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>DataGrid.Columns</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>DataGrid</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>Các bạn chạy thử và xem kết quả nhé.</p></div> <footer><!----> <hr> <!----></footer></article> <!----></div></div> <footer class="footer" data-v-3d9deeb8><div class="footer-left-wrap" data-v-3d9deeb8><ul class="contact" data-v-3d9deeb8></ul></div> <div class="footer-right-wrap" data-v-3d9deeb8><ul class="copyright" data-v-3d9deeb8></ul></div></footer></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.64739e7c.js" defer></script><script src="/assets/js/6.c2bdbd38.js" defer></script><script src="/assets/js/3.a1a593ad.js" defer></script><script src="/assets/js/13.388d5714.js" defer></script>
+  </body>
+</html>
